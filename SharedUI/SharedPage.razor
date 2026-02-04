@@ -1,0 +1,15 @@
+@page "/shared-test"
+
+<h3>Shared UI Test</h3>
+<p>This page is running from the Shared Library!</p>
+
+<BlueButton ButtonText="I work on Docker & Maui!" OnClick="@(() => buttonClicked = true)" />
+
+@if (buttonClicked)
+{
+    <p style="color: green; margin-top: 10px;">Button was clicked!</p>
+}
+
+@code {
+    bool buttonClicked = false;
+}
