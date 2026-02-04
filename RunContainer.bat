@@ -2,13 +2,13 @@
 @echo off
 
 echo Cleaning up old container...
-docker stop mauiapp >nul 2>&1
-docker rm mauiapp >nul 2>&1
+docker stop AppMaui >nul 2>&1
+docker rm AppMaui >nul 2>&1
 
 echo Starting docker...
 
-docker build -t mauiapp-web .
-docker run -d -p 8080:8080 --name mauiapp mauiapp-web
+docker build -t AppMaui-web .
+docker run -d -p 8080:8080 --name AppMaui AppMaui-web
 
 
 if %ERRORLEVEL% neq 0 (

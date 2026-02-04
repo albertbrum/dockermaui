@@ -9,7 +9,7 @@ The project contains the following structure for the native deployment (Android,
 /DOCKERMAUI (Root)
 │
 ├── /SharedUI           # (Razor Class Library)
-├── /MauiApp            # (Projeto Nativo - Android/Windows/iOS)
+├── /AppMaui            # (Projeto Nativo - Android/Windows/iOS)
 ├── /WebApp             # (Projeto Blazor Server/Wasm - O que vai pro Docker)
 │
 └── Dockerfile          # (Config)
