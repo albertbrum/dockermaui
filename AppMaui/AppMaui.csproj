@@ -65,4 +65,10 @@
 	  <ProjectReference Include="..\SharedUI\SharedUI.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Model\" />
+	  <Folder Include="View\" />
+	  <Folder Include="ViewModel\" />
+	</ItemGroup>
+
 </Project>

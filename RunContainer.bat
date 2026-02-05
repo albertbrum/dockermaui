@@ -10,7 +10,6 @@ echo Starting docker...
 docker build -t app-maui-web .
 docker run -d -p 8080:8080 --name app-maui app-maui-web
 
-
 if %ERRORLEVEL% neq 0 (
     echo Command failed with error code %ERRORLEVEL%.
     pause
