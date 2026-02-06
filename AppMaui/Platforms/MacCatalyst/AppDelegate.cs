@@ -5,5 +5,5 @@ namespace AppMaui;
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate
 {
-	protected override AppMaui CreateAppMaui() => MauiProgram.CreateAppMaui();
+	protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
 }
