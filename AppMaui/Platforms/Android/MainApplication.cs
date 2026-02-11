@@ -4,12 +4,12 @@ using Android.Runtime;
 namespace AppMaui;
 
 [Application]
-public class MainApplication : AppMauilication
+public class MainApplication : MauiApplication
 {
 	public MainApplication(IntPtr handle, JniHandleOwnership ownership)
 		: base(handle, ownership)
 	{
 	}
 
-	protected override AppMaui CreateAppMaui() => MauiProgram.CreateAppMaui();
+	protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
 }
