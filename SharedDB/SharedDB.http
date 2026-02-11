@@ -1,0 +1,6 @@
+@SharedDB_HostAddress = http://localhost:5020
+
+GET {{SharedDB_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

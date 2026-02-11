@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: userauth_db
+      POSTGRES_USER: devuser
+      POSTGRES_PASSWORD: devpassword
+    ports:
+      - "5432:5432"
+
+  api:
+    build: ./SharedDB
+    depends_on:
+      - db
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=db;Database=userauth_db;Username=devuser;Password=devpassword
+    ports:
+      - "5000:8080"
+
+  frontend:
+    build: ./WebApp
+    depends_on:
+      - api
+    environment:
+      - ApiBaseUrl=http://api:8080
+    ports:
+      - "80:8080"
