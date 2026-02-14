@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/login"
 
 <PageTitle>Login</PageTitle>
 
@@ -37,8 +37,8 @@
         // Simple hardcoded authentication
         if (username == "admin" && password == "password")
         {
-            // Navigate to main page, perhaps Weather or Counter
-            Navigation.NavigateTo("/counter");
+            // Navigate to Home
+            Navigation.NavigateTo("/");
         }
         else
         {

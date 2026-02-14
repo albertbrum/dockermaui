@@ -1,7 +1,7 @@
 # ---------------------------
 # BUILD
 # ---------------------------
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 COPY ["WebApp/WebApp.csproj", "WebApp/"]
@@ -17,7 +17,7 @@ RUN dotnet publish "WebApp.csproj" -c Release -o /app/publish /p:UseAppHost=fals
 # ---------------------------
 # RUNTIME
 # ---------------------------
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 
 EXPOSE 80
