@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NSwag.AspNetCore;
+using Microsoft.OpenApi;
+using Microsoft.AspNetCore.OpenApi;
 using SharedDB;
 using SharedDB.Context;
 
@@ -9,41 +11,38 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
 builder.Services.AddAuthorization();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-//builder.Services.AddOpenApi(options =>
-//{
-//    options.AddDocumentTransformer((document, context, cancellationToken) =>
-//    {
-//        document.Components ??= new Microsoft.OpenApi.OpenApiComponents();
-//        document.Components.SecuritySchemes?.Add("Bearer", new Microsoft.OpenApi.OpenApiSecurityScheme
-//        {
-//            Type = Microsoft.OpenApi.SecuritySchemeType.Http,
-//            Scheme = "bearer",
-//            BearerFormat = "JWT",
-//            In = Microsoft.OpenApi.ParameterLocation.Header,
-//            Description = "Insira o token JWT no formato: Bearer {seu_token}"
-//        });
+//builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer((document, context, cancellationToken) =>
+    {
+        document.Components ??= new Microsoft.OpenApi.OpenApiComponents();
+        document.Components.SecuritySchemes = new Dictionary<string, IOpenApiSecurityScheme>
+        {
+            ["Bearer"] = new OpenApiSecurityScheme
+            {
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "Insira o token JWT no formato: Bearer {seu_token}"
+            }
+        };
 
-//        document.Security?.Add(new Microsoft.OpenApi.OpenApiSecurityRequirement
-//        {
-//            {
-//                new Microsoft.OpenApi.OpenApiSecurityScheme
-//                {
-//                    Reference = new Microsoft.OpenApi.OpenApiReference
-//                    {
-//                        Type = Microsoft.OpenApi.ReferenceType.SecurityScheme,
-//                        Id = "Bearer"
-//                    }
-//                },
-//                Array.Empty<string>()
-//            }
-//        });
-//        return Task.CompletedTask;
-//    });
-//});
+        foreach (var operation in document.Paths.Values.SelectMany(path => path.Operations))
+        {
+            operation.Value.Security ??= [];
+            operation.Value.Security.Add(new OpenApiSecurityRequirement
+            {
+                [new OpenApiSecuritySchemeReference("Bearer", document)] = []
+            });
+        }
+        return Task.CompletedTask;
+    });
+});
 //builder.Services.AddDbContext<ApplicationDbContext>(
 //    options => options.UseInMemoryDatabase("AppDb"));
 
@@ -99,9 +98,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//app.UseAuthorization();
+app.UseAuthorization();
 
-app.MapControllers();
+//app.MapControllers();
 
 app.MapIdentityApi<IdentityUser>();
 
@@ -127,8 +126,8 @@ app.MapGet("/wthr", (HttpContext httpContext) =>
         .ToArray();
     return forecast;
 })
-.WithName("GetWeatherForecast");
-//.RequireAuthorization("Admin");
+.WithName("GetWeatherForecast")
+.RequireAuthorization();
 
 //app.MapSwagger().RequireAuthorization();
 
