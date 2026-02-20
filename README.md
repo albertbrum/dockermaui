@@ -20,8 +20,11 @@ The project contains the following structure for the native deployment (Android,
 
 This project uses OpenAPI's Identity system to manage user login with hashed passwords and 2FA.
 Certain endpoints may require an authentication token, which is obtained after registering and logging.
+This section presents contents of the *SharedDB* project, for hosting the user database.
 
 1. Register with the 'register' endpoint:
+   
+   ![Register](Images/endpoint_register.png)
 
 	```
  		curl -X 'POST' \
@@ -35,7 +38,8 @@ Certain endpoints may require an authentication token, which is obtained after r
 	```
 
 3. Attempt login with the 'login' endpoint. The api will return a JWT response:
-   
+
+   ![Login](Images/endpoint_login.png)
    
 			curl -X 'POST' \
 			'http://localhost:5020/login?useCookies=false&useSessionCookies=false' \
@@ -62,3 +66,15 @@ Certain endpoints may require an authentication token, which is obtained after r
 		-H 'accept: application/json' \
 		-H 'Authorization: Bearer CfDJ8O4hL85mJ45Hv7hRgAZsulHmcsGdI1-Wz_wB8si9G5XLp_V5CrjIraZg547RjsDb-kEvjqoKsW2rDzWdH9gdAjShXbkUi2HEwX2PWUjaGZ_RhtpqY6L3wzbn_7fe_fDtH_Fsw9wfsCrBWOPSBtSkxcNL_N2EhNKSie_0RLlUsPtxDWW-L0un9U2KUsE5mECie--JJByVR3ltE2wvX2NIeOz_OnPBEZ5Slc4VpoVKZnshcdNJI0U03IMYgK3M15Sym2AnMeVxDhhWl0zfeY0e0SZhOVtv2x6xlW2MflLMxCbLd5RIZhY53Dr0q4vKOVzWrjY9z_3fFCDNziHej10JsVit5oUu6KvtPEATksub0sDGfgaYuj_qo8VFQc0_rc-yDqKJvefDTXR1JgL180YVdrhls4rXUTJZqA8_AoFrEEnjR2wY-wfUB37YH9TDL1aC7uhZQ4jEdcH3fuVxUPwoFM_7SkA2PT0sox_KHDHC1lWx17n32jqenZn9j9XHi0XQd2gAlwuXWSj1_61DeolCc3zytWF-qvKDFgEqLwgnXscX72tslDs6Q6UUK6S14BJN2XOZ8wfoQ1c6lHAlY2Ek-4qJJ5i4FKaKICZZIVGxFAR8MXSH_T6tFzXtny02iDDDMZpMatwohqngtMRxkpkQ68ac3dxi22ReN7YFkEtkJl0sXWe-1W0O9nlRhuX52fqDg8gJlSvZ5HQzuawjodmiNgY'
    
+---
+# ✉️ Sending confirmation emails
+The user login endpoint will be enabled only after the user has confirmed email post-login. The confirmation request is sent via the 
+`/resendConfirmationEmail` endpoint, to `localhost:25`.
+
+![Register](Images/endpoint_confirmationEmail.png)
+
+The email is sent to a local server, hosted by [Smpt4dev](https://github.com/rnwood/smtp4dev/releases). The email received will contain a confirmation link,
+that sends a request to the `/confirmEmail` endpoint.
+
+![ConfirmEmail](Images/result_confirmationEmail.png)
+
