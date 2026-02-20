@@ -22,7 +22,7 @@ This project uses OpenAPI's Identity system to manage user login with hashed pas
 Certain endpoints may require an authentication token, which is obtained after registering and logging.
 
 1. Register with the 'register' endpoint:
-   
+
 	```
  		curl -X 'POST' \
 		'http://localhost:5020/register' \

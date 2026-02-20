@@ -5,6 +5,7 @@ using Microsoft.OpenApi;
 using Microsoft.AspNetCore.OpenApi;
 using SharedDB;
 using SharedDB.Context;
+using SharedDB.Services;
 
 //TODO: Configurar o Swagger para aceitar o token JWT e proteger as rotas com autorização
 var builder = WebApplication.CreateBuilder(args);
@@ -73,8 +74,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlite(connect
 //    options.JsonSerializerOptions.NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.AllowNamedFloatingPointLiterals;
 //});
 
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddTransient<Microsoft.AspNetCore.Identity.IEmailSender<IdentityUser>, EmailSender>();
+
+builder.Services.AddIdentityApiEndpoints<IdentityUser>(options =>
+{
+    options.SignIn.RequireConfirmedEmail = true;
+})
+.AddEntityFrameworkStores<ApplicationDbContext>();
 
 //builder.Services.AddAuthorization(options =>
 //{
