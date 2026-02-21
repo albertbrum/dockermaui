@@ -9,9 +9,26 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedUI", "SharedUI\Shared
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{3215F6CF-A442-1C21-6AD3-94ED23F4EBA5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{36669C2B-86F4-4147-AAF9-4419BF28F5C3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{7224D3CC-78E1-4636-A7CF-9EAEB8474D6D}"
 	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.gitignore = .gitignore
+		docker-compose.yml = docker-compose.yml
+		dockerfile = dockerfile
+		README.md = README.md
 		RunContainer.bat = RunContainer.bat
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedDB", "SharedDB\SharedDB.csproj", "{E0EE3965-2E57-4AA3-BD70-3689AB9A40A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedLib", "SharedLib\SharedLib.csproj", "{671F7D9E-8CE0-F7B6-5080-2E688951F00E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{A3B78019-C49E-4DDB-BAC0-777099FA636C}"
+	ProjectSection(SolutionItems) = preProject
+		Images\endpoint_confirmationEmail.png = Images\endpoint_confirmationEmail.png
+		Images\endpoint_login.png = Images\endpoint_login.png
+		Images\endpoint_register.png = Images\endpoint_register.png
+		Images\result_confirmationEmail.png = Images\result_confirmationEmail.png
 	EndProjectSection
 EndProject
 Global
@@ -22,6 +39,7 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{6D548CD6-CC82-CFAE-C1F0-CADDAC955E37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6D548CD6-CC82-CFAE-C1F0-CADDAC955E37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D548CD6-CC82-CFAE-C1F0-CADDAC955E37}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{6D548CD6-CC82-CFAE-C1F0-CADDAC955E37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D548CD6-CC82-CFAE-C1F0-CADDAC955E37}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7FF0403F-897C-5F23-9C19-8B9873CE95E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -32,9 +50,20 @@ Global
 		{3215F6CF-A442-1C21-6AD3-94ED23F4EBA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3215F6CF-A442-1C21-6AD3-94ED23F4EBA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3215F6CF-A442-1C21-6AD3-94ED23F4EBA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0EE3965-2E57-4AA3-BD70-3689AB9A40A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0EE3965-2E57-4AA3-BD70-3689AB9A40A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0EE3965-2E57-4AA3-BD70-3689AB9A40A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0EE3965-2E57-4AA3-BD70-3689AB9A40A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{671F7D9E-8CE0-F7B6-5080-2E688951F00E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{671F7D9E-8CE0-F7B6-5080-2E688951F00E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{671F7D9E-8CE0-F7B6-5080-2E688951F00E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{671F7D9E-8CE0-F7B6-5080-2E688951F00E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A3B78019-C49E-4DDB-BAC0-777099FA636C} = {7224D3CC-78E1-4636-A7CF-9EAEB8474D6D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FD698788-6788-4712-A1AC-F8CF37E76888}
