@@ -1,0 +1,6 @@
+<Project>
+  <!-- Stubs to satisfy WebView.Maui .targets DependsOnTargets when static web assets targets are not present -->
+  <Target Name="StaticWebAssetsPrepareForRun" />
+  <Target Name="StaticWebAssetsPrepareForPublish" />
+  <Target Name="LoadStaticWebAssetsPublishManifest" />
+</Project>

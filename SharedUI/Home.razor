@@ -1,0 +1,11 @@
+@page "/"
+
+<AuthorizeView>
+    <Authorized>
+        <h3>Bem-vindo!</h3>
+        <p>Você está logado.</p>
+    </Authorized>
+    <NotAuthorized>
+        <SharedUI.Shared.RedirectToLogin />
+    </NotAuthorized>
+</AuthorizeView>

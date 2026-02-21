@@ -1,0 +1,10 @@
+@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager NavigationManager
+
+<AuthorizeView>
+    <Authorized>
+        <form action="/Identity/Account/Logout" method="post">
+            <button type="submit" class="btn btn-outline-primary">Logout</button>
+        </form>
+    </Authorized>
+</AuthorizeView>

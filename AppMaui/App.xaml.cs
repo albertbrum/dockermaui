@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace AppMaui;
+﻿namespace AppMaui;
 
 public partial class App : Application
 {
@@ -11,6 +9,6 @@ public partial class App : Application
 
 	protected override Window CreateWindow(IActivationState? activationState)
 	{
-		return new Window(new LoginPage());
+		return new Window(new MainPage());
 	}
 }

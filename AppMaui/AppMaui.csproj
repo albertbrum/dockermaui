@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
 		<TargetFrameworks>net10.0-android;net10.0-ios;net10.0-maccatalyst</TargetFrameworks>
@@ -58,17 +58,39 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
+	  <AndroidResource Remove="Model\**" />
+	  <AndroidResource Remove="ViewModel\**" />
+	  <AndroidResource Remove="View\**" />
+	  <Compile Remove="Model\**" />
+	  <Compile Remove="ViewModel\**" />
+	  <Compile Remove="View\**" />
+	  <Content Remove="Model\**" />
+	  <Content Remove="ViewModel\**" />
+	  <Content Remove="View\**" />
+	  <EmbeddedResource Remove="Model\**" />
+	  <EmbeddedResource Remove="ViewModel\**" />
+	  <EmbeddedResource Remove="View\**" />
+	  <MauiCss Remove="Model\**" />
+	  <MauiCss Remove="ViewModel\**" />
+	  <MauiCss Remove="View\**" />
+	  <MauiXaml Remove="Model\**" />
+	  <MauiXaml Remove="ViewModel\**" />
+	  <MauiXaml Remove="View\**" />
+	  <None Remove="Model\**" />
+	  <None Remove="ViewModel\**" />
+	  <None Remove="View\**" />
 	</ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.41" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.3" />
+        <!-- Add BlazorWebView for MAUI so we can host SharedUI components -->
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="10.0.41" />
+    </ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\SharedUI\SharedUI.csproj" />
+	  <ProjectReference Include="..\SharedDB\SharedDB.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <MauiXaml Update="LoginPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	</ItemGroup>
 </Project>

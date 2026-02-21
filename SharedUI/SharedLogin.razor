@@ -1,0 +1,169 @@
+@page "/login"
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Login</PageTitle>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3>Autenticação</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="nav nav-tabs" id="authTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link @(activeTab == "login" ? "active" : "")" @onclick="SetLoginTab" type="button">Login</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link @(activeTab == "register" ? "active" : "")" @onclick="SetRegisterTab" type="button">Registrar</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-3">
+                        @if (activeTab == "login")
+                        {
+                            <div class="tab-pane fade show active">
+                                <h4>Login</h4>
+                                <EditForm Model="@loginModel" OnValidSubmit="OnLogin">
+                                    <DataAnnotationsValidator />
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email:</label>
+                                        <InputText id="email" class="form-control" @bind="loginModel.Email" />
+                                        <ValidationMessage For="() => loginModel.Email" class="text-danger" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label">Senha:</label>
+                                        <InputText id="password" type="password" class="form-control" @bind="loginModel.Password" />
+                                        <ValidationMessage For="() => loginModel.Password" class="text-danger" />
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                                </EditForm>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="tab-pane fade show active">
+                                <h4>Registrar Novo Usuário</h4>
+                                <EditForm Model="registerModel" OnValidSubmit="OnRegister">
+                                    <DataAnnotationsValidator />
+                                    <div class="mb-3">
+                                        <label for="regEmail" class="form-label">Email:</label>
+                                        <InputText id="regEmail" class="form-control" @bind="registerModel.Email" />
+                                        <ValidationMessage For="() => registerModel.Email" class="text-danger" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="regPassword" class="form-label">Senha:</label>
+                                        <InputText id="regPassword" type="password" class="form-control" @bind="registerModel.Password" />
+                                        <ValidationMessage For="() => registerModel.Password" class="text-danger" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="confirmPassword" class="form-label">Confirmar Senha:</label>
+                                        <InputText id="confirmPassword" type="password" class="form-control" @bind="registerModel.ConfirmPassword" />
+                                        <ValidationMessage For="() => registerModel.ConfirmPassword" class="text-danger" />
+                                    </div>
+                                    <button type="submit" class="btn btn-success w-100">Registrar</button>
+                                </EditForm>
+                            </div>
+                        }
+                    </div>
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="alert alert-danger mt-3">@errorMessage</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string activeTab = "login";
+    private string errorMessage = "";
+
+    private LoginModel loginModel = new();
+    private RegisterModel registerModel = new();
+
+    private void SetLoginTab()
+    {
+        activeTab = "login";
+    }
+
+    private void SetRegisterTab()
+    {
+        activeTab = "register";
+    }
+
+    private async Task OnLogin()
+    {
+        try
+        {
+            var response = await Http.PostAsJsonAsync("/api/account/login", loginModel);
+            if (response.IsSuccessStatusCode)
+            {
+                Navigation.NavigateTo("/");
+            }
+            else
+            {
+                errorMessage = "Credenciais inválidas.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Erro ao efetuar login.";
+        }
+    }
+
+    private async Task OnRegister()
+    {
+        if (registerModel.Password != registerModel.ConfirmPassword)
+        {
+            errorMessage = "As senhas não coincidem.";
+            return;
+        }
+
+        try
+        {
+            var response = await Http.PostAsJsonAsync("/api/account/register", registerModel);
+            if (response.IsSuccessStatusCode)
+            {
+                errorMessage = "Usuário registrado. Verifique seu email para confirmar a conta.";
+            }
+            else
+            {
+                var msg = await response.Content.ReadAsStringAsync();
+                errorMessage = string.IsNullOrWhiteSpace(msg) ? "Erro ao registrar usuário." : msg;
+            }
+        }
+        catch
+        {
+            errorMessage = "Erro ao registrar usuário.";
+        }
+    }
+
+    public class LoginModel
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = "";
+
+        [Required]
+        public string Password { get; set; } = "";
+    }
+
+    public class RegisterModel
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = "";
+
+        [Required]
+        [MinLength(6)]
+        public string Password { get; set; } = "";
+
+        [Required]
+        [Compare("Password")]
+        public string ConfirmPassword { get; set; } = "";
+    }
+}
